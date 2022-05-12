@@ -1,6 +1,9 @@
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 
 public class CipsDAO {
@@ -26,6 +29,44 @@ public class CipsDAO {
 		}
 		return conn;
 	}
+	
+	public ArrayList getAllMentors() {
+        ArrayList mentors = new ArrayList();
+        try {
+            Connection conn = getConnection(true);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("Select * from PersonalInfo p, EducationalInfo e where p.MemberID=e.MemberID");
+            while (rs.next()) {
+                
+                Mentor mentor = new Mentor(rs.getInt("MemberID"), rs.getString("FullName"), rs.getString("Email"), rs.getString("CurLocation"), rs.getString("RegDate"),
+                		rs.getString("EduLevel"), rs.getString("EduField"), rs.getString("InstituteName"), rs.getString("Country"), null, null, null, null, null, null, null, null);
+                mentors.add(mentor);
+            }
+            conn.close();
+        } catch (Exception e) {
+
+        }
+        return mentors;
+    }
+	
+	public ArrayList getAllMentees() {
+        ArrayList mentees = new ArrayList();
+        try {
+            Connection conn = getConnection(false);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("Select * from PersonalInfo p, EducationalInfo e where p.MemberID=e.MemberID");
+            while (rs.next()) {
+                
+                Mentee mentee = new Mentee(rs.getInt("MemberID"), rs.getString("FullName"), rs.getString("Email"), rs.getString("CurLocation"), rs.getString("RegDate"),
+                		rs.getString("EduLevel"), rs.getString("EduField"), rs.getString("InstituteName"), rs.getString("Country"), null, null, null, null, null, null);
+                mentees.add(mentee);
+            }
+            conn.close();
+        } catch (Exception e) {
+
+        }
+        return mentees;
+    }
 
 	public void updateTables(Member m, boolean isMentor) {
 		conn = getConnection(isMentor);

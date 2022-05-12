@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,11 +47,9 @@ public class AddRecordServlet extends HttpServlet {
 		} else if (role.equalsIgnoreCase("role_mentee")) {
 			isMentor=false;
 			m= new Mentee(memberId, fullName, email, currentLocation, regDate, educationLevel, educationLevel, instituteName, country, experience, experienceType, null, null, preference, ranking);
-		}
-		
+		}	
 		CipsDAO dao = new CipsDAO();
-		dao.updateTables(m, isMentor);
-		
+		dao.updateTables(m, isMentor);	
 }
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
