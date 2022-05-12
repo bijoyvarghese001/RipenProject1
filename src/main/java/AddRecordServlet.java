@@ -7,31 +7,48 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.Service;
 
 public class AddRecordServlet extends HttpServlet {
+	private boolean isMentor =false;
 	
 	public void doPost (HttpServletRequest req, HttpServletResponse res) {
 		
+		
 		String role = req.getParameter("role");
-		String name = req.getParameter("name");
-		String membershipNo = req.getParameter("membership_no");
-		String location = req.getParameter("location");
+		//int memberId = Integer.parseInt(req.getParameter("cipsMemNo"));
+		int memberId=1234; //Need to remove this later . Testing only
+		String fullName = req.getParameter("fullName");
 		String email = req.getParameter("email");
+		String currentLocation = req.getParameter("currLoc");
+		String regDate = req.getParameter("regDate");
+		regDate = "2012-09-25"; // Need to remove this later
+		String educationLevel = req.getParameter("educationLevel");
+		String instituteName = req.getParameter("instituteName");
+		String country = req.getParameter("country");
+		String experience = req.getParameter("experience");
+		String experienceType = req.getParameter("experienceType");
+		String preference = req.getParameter("preference");
+		String ranking = req.getParameter("ranking");
 		
 		PrintWriter out=null;
+		Member m = null;
 		try {
 			out = res.getWriter();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		out.print("name = "+name);
-		out.print("\nmembership_no = "+membershipNo);
-		out.print("\nlocation = "+location);
-		out.print("\nemail = "+email);
-		out.print("\nrole = "+role);
+	
+		if(role.equalsIgnoreCase("role_mentor")) {
+			isMentor=true;
+			String profession = req.getParameter("profession");
+			String title = req.getParameter("title");
+			m= new Mentor(memberId, fullName, email, currentLocation, regDate, educationLevel, educationLevel, instituteName, country, experience, experienceType, null, null, preference, ranking, profession, title);
+		} else if (role.equalsIgnoreCase("role_mentee")) {
+			isMentor=false;
+			m= new Mentee(memberId, fullName, email, currentLocation, regDate, educationLevel, educationLevel, instituteName, country, experience, experienceType, null, null, preference, ranking);
+		}
 		
-		Mentor m = new Mentor(role, name, membershipNo, location, email);
 		CipsDAO dao = new CipsDAO();
-		dao.updateRecord(m);
+		dao.updateTables(m, isMentor);
 		
 }
 	@Override

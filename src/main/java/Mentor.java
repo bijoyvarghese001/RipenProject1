@@ -1,61 +1,31 @@
 
-public class Mentor {
+public class Mentor extends Member {
+	private String profession;
+	private String title;
 
-	private String role;
-	private String name;
-	private String membershipNo;
-	private String location;
-	private String email;
-	
-	
-
-	public Mentor(String role, String name, String membershipNo, String location, String email) {
-		super();
-		this.role = role;
-		this.name = name;
-		this.membershipNo = membershipNo;
-		this.location = location;
-		this.email = email;
+	public Mentor(int memberId, String fullName, String email, String currentLocation, String regDate,
+			String educationLevel, String educationField, String instituteName, String country, String experience,
+			String experienceType, String[] goals, String[] interests, String preference, String ranking,
+			String profession, String title) {
+		super(memberId, fullName, email, currentLocation, regDate, educationLevel, educationField, instituteName,
+				country, experience, experienceType, goals, interests, preference, ranking);
+		this.profession = profession;
+		this.title = title;
 	}
 
-	public String getRole() {
-		return role;
+	public String getProfession() {
+		return profession;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setProfession(String profession) {
+		this.profession = profession;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-
-	public String getMembershipNo() {
-		return membershipNo;
-	}
-
-	public void setMembershipNo(String membershipNo) {
-		this.membershipNo = membershipNo;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 }
